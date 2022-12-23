@@ -49,6 +49,8 @@ def scrape(url,m):
     return df2
 
 
+st.text("Getting Data from Fbref site by scraping, this will take some time unfortunately,please wait ")
+
 @st.cache
 def getting_data():
     df1 = scrape(url[1],matches[1])
@@ -401,23 +403,25 @@ def forward():
     )
 
     # add image
-    im1 = plt.imread('/Users/ligandrosy/Downloads/LOGO1.png')
+    im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
     ax_image = add_image(
-    im1, fig, left=0.478, bottom=0.459, width=0.07, height=0.07
+    im1, fig, left=0.4768, bottom=0.4675, width=0.07, height=0.07
     ) 
-
-
-    # these values might differ when you are plotting
-    im3 = plt.imread('/Users/ligandrosy/Downloads/Perc.jpg')
+    
+    
+     # these values might differ when you are plotting
+    im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
     ax_image = add_image(
     im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
     )   # these values might differ when you are plotting
 
+
     # these values might differ when you are plotting
-    im3 = plt.imread('/Users/ligandrosy/Downloads/4.jpg')
+    im3 = plt.imread('https://i.postimg.cc/RFCQnnrz/4.png')
     ax_image = add_image(
     im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
     )   # these values might differ when you are plotting 
+   
     
     st.pyplot(fig)
 
@@ -546,24 +550,25 @@ def mid():
     )
 
     # add image
-    im1 = plt.imread('/Users/ligandrosy/Downloads/LOGO1.png')
+    # add image
+    im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
     ax_image = add_image(
-    im1, fig, left=0.478, bottom=0.459, width=0.07, height=0.07
-    ) 
-
-
-    # these values might differ when you are plotting
-    im3 = plt.imread('/Users/ligandrosy/Downloads/Perc.jpg')
+    im1, fig, left=0.4768, bottom=0.4675, width=0.07, height=0.07
+    )
+    
+     # these values might differ when you are plotting
+    im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
     ax_image = add_image(
     im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
     )   # these values might differ when you are plotting
 
 
     # these values might differ when you are plotting
-    im3 = plt.imread('/Users/ligandrosy/Downloads/5.jpg')
+    im3 = plt.imread('https://i.postimg.cc/Y9XNNqkL/5.png')
     ax_image = add_image(
     im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
     )   # these values might differ when you are plotting 
+   
     
     st.pyplot(fig)
    
