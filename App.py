@@ -288,7 +288,7 @@ age =player.iloc[0,6]
 
 
 pos1 = [ "Forward","Midfielder","Defender"]
-pos = st.selectbox("Select Position",options = pos1)
+pos = st.sidebar.selectbox("Select Position",options = pos1)
 
 
 def forward():
