@@ -354,10 +354,10 @@ def forward():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "Futura",size =10,color="black",fontweight="bold", va="center"
+            font = "monospace",size =10,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
-            font = "Futura",size =9,color="black",fontweight="bold", zorder=3,
+            font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
             bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",
             boxstyle="round,pad=0.2", lw=1
@@ -374,19 +374,19 @@ def forward():
     fig.text(
     0.515, 1.02, f"{Name}-{Team}",
     path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-    ha="center", font = "Futura",size =32,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =32,color="black",fontweight="bold"
     )
 
     # add subtitle
     fig.text(
     0.515, 0.982,
     f"Forward Player Stats/90 | {League} Attackers FW,FW/MF,MF/FW,FW/DF",
-    ha="center", font = "Futura",size =13,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
     )
     fig.text(
     0.515, 0.948,
     f" 90s Played : {time} | Age : {age} | Season : 22-23",
-    ha="center", font = "Futura",size =13,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
     )
 
 
@@ -398,7 +398,7 @@ def forward():
 
     fig.text(
     0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-    font = "Futura",size =12,color="black",fontweight="bold",
+    font = "monospace",size =12,color="black",fontweight="bold",
     ha="right"
     )
 
@@ -501,10 +501,10 @@ def mid():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "Futura",size =10,color="black",fontweight="bold", va="center"
+            font = "monospace",size =10,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
-            font = "Futura",size =9,color="black",fontweight="bold", zorder=3,
+            font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
             bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",
             boxstyle="round,pad=0.2", lw=1
@@ -521,19 +521,19 @@ def mid():
     fig.text(
     0.515, 1.02, f"{Name}-{Team}",
     path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-    ha="center", font = "Futura",size =32,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =32,color="black",fontweight="bold"
     )
 
     # add subtitle
     fig.text(
     0.515, 0.982,
     f"Midfielder Stats/90 | {League} Midfielders MF,MF/DF",
-    ha="center", font = "Futura",size =13,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
     )
     fig.text(
     0.515, 0.948,
     f" 90s Played : {time} | Age : {age} | Season : 22-23",
-    ha="center", font = "Futura",size =13,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
     )
 
 
@@ -545,7 +545,7 @@ def mid():
 
     fig.text(
     0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-    font = "Futura",size =12,color="black",fontweight="bold",
+    font = "Monospace",size =12,color="black",fontweight="bold",
     ha="right"
     )
 
