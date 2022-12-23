@@ -227,16 +227,15 @@ st.subheader("Compare stats with Big 5 or a specific league, set position and mi
 st.subheader("Data: FBREF Made by : Ligandro")
 
 st.text("Data:")
-st.table(liga[:5])
 
 
 col_list = liga["Player"].values.tolist()
 
-x = st.selectbox("Name of Player ",options = col_list)
+x = st.sidebar.selectbox("Name of Player ",options = col_list)
 
 
 league = [ "eng Premier League","fr Ligue 1","de Bundesliga","it Serie A","es La Liga","Big 5"]
-League = st.selectbox("Select League ",options = league)
+League = st.sidebar.selectbox("Select League ",options = league)
 
 
 a3 = League
@@ -247,7 +246,7 @@ else:
     prem = liga.copy()
     League = a3
   
-minutes = st.slider("Select Minimum 90s Played",0,38)
+minutes = st.sidebar.slider("Select Minimum 90s Played",0,38)
   
 prem = prem[prem["90s"] >= minutes ]
 
