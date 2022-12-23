@@ -405,7 +405,7 @@ def forward():
     # add image
     im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
     ax_image = add_image(
-    im1, fig, left=0.4768, bottom=0.4645, width=0.07, height=0.07
+    im1, fig, left=0.4768, bottom=0.463, width=0.07, height=0.07
     ) 
     
     
@@ -553,7 +553,7 @@ def mid():
     # add image
     im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
     ax_image = add_image(
-    im1, fig, left=0.4768, bottom=0.4645, width=0.07, height=0.07
+    im1, fig, left=0.4768, bottom=0.463, width=0.07, height=0.07
     )
     
      # these values might differ when you are plotting
