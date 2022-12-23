@@ -417,7 +417,7 @@ def forward():
     # add image
     im1 = plt.imread('/Users/ligandrosy/Downloads/LOGO1.png')
     ax_image = add_image(
-    im1, fig, left=0.4770, bottom=0.4588, width=0.07, height=0.07
+    im1, fig, left=0.4772, bottom=0.459, width=0.07, height=0.07
     ) 
 
 
