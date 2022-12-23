@@ -49,157 +49,170 @@ def scrape(url,m):
     return df2
 
 
-@st.cache
-def getting_data():
-    df1 = scrape(url[1],matches[1])
-    df1["Rk"] =df1["Rk"].astype(int)
+# Shooting Stats
+df1 = scrape(url[1],matches[1])
+df1["Rk"] =df1["Rk"].astype(int)
 # replacing na values in college with No college
-    df1.fillna(0, inplace = True)
+df1.fillna(0, inplace = True)
  
  
-    df1["Age"] =df1["Age"].astype(str)
-    def turn(x):
-        b = x[:2]
-        a = x[3:]
-        a =a.strip("0")
-        x =b +" Years, "+ a+ " Days"
-        return x
+df1["Age"] =df1["Age"].astype(str)
+def turn(x):
+    b = x[:2]
+    a = x[3:]
+    a =a.strip("0")
+    x =b +" Years, "+ a+ " Days"
+    return x
 
 
-    df1["Age"]=df1["Age"].apply(lambda x : turn(x) )
-
-
-
-        # Change type of variable to floats
-    df1["Player"] =df1["Player"].astype(str)
-    df1["Nation"] =df1["Nation"].astype(str)
-    df1["Squad"] =df1["Squad"].astype(str)
-    df1["Comp"] =df1["Comp"].astype(str)
-    df1["Pos"] =df1["Pos"].astype(str)
-    df1["Age"] =df1["Age"].astype(str)
-    df1["Age"] =df1["Age"].apply(lambda x : x[:2])
-    df1["Age"] =df1["Age"].astype(float)
-    df1["90s"] =df1["90s"].astype(float)
-    df1["Gls"] =df1["Gls"].astype(float)
-    df1["SoT/90"] =df1["SoT/90"].astype(float)
-    df1["npxG"] =df1["npxG"].astype(float)
-    df1["npxG/Sh"] =df1["npxG/Sh"].astype(float)
-    df1["PK"] =df1["PK"].astype(float)
-
-        #Create new columns
-    df1["npG"] = df1["Gls"] -df1["PK"]
-
-        # Create main dataframe
-    list1 = df1.iloc[:,0]
-    liga = pd.DataFrame()
-    liga["Rk"] =list1
-
-        # applying merge with more parameters
-    liga = liga.merge(df1[["Player","Rk",'Pos','Squad','Nation',"Comp",'Age','90s','npG','npxG','SoT/90',"npxG/Sh"]], left_on="Rk", right_on="Rk",how = 'inner')
-        
-    # Passing Stats
-    df2 = scrape(url[2],matches[2])
-    df2["Rk"] =df2["Rk"].astype(int)
-    # replacing na values in college with No college
-    df2.fillna(0, inplace = True)
-
-
-    list1 = df2.iloc[:, 9]
-    df2["Passes Completed"] = list1
-    list1 = df2.iloc[:, 11]
-    df2["Passes%"] = list1
-
-
-    df2["xA"] =df2["xA"].astype(float)
-    df2["Passes%"] =df2["Passes%"].astype(float)
-    df2["1/3"] =df2["1/3"].astype(float)
-    df2["KP"] =df2["KP"].astype(float)
-    df2["CrsPA"] =df2["CrsPA"].astype(float) 
-    df2["PPA"] =df2["PPA"].astype(float)
-    df2["Ast"] =df2["Ast"].astype(float)
-    df2["Passes Completed"] =df2["Passes Completed"].astype(float)
-    df2["Prog"] =df2["Prog"].astype(float)
-
-
-     # applying merge with more parameters
-    liga = liga.merge(df2[["Rk",'Ast','xA','KP','1/3','PPA','CrsPA','Prog','Passes Completed','Passes%']], left_on="Rk", right_on="Rk",how = 'inner')
-
-    
-    # Pass Type Stats
-    df3 = scrape(url[3],matches[3])
-    df3["Rk"] =df3["Rk"].astype(int)
-    # replacing na values in college with No college
-    df3.fillna(0, inplace = True)
-
-
-    df3["TB"] =df3["TB"].astype(float)
-    df3["Sw"] =df3["Sw"].astype(float)
-    df3["Crs"] =df3["Crs"].astype(float)
-
-    liga = liga.merge(df3[["Rk",'TB','Sw','Crs']], left_on="Rk", right_on="Rk",how = 'inner')
+df1["Age"]=df1["Age"].apply(lambda x : turn(x) )
 
 
 
-    df4 = scrape(url[4],matches[4])
-    df4["Rk"] =df4["Rk"].astype(int)
-    # replacing na values in college with No college
-    df4.fillna(0, inplace = True)
+# Change type of variable to floats
+df1["Player"] =df1["Player"].astype(str)
+df1["Nation"] =df1["Nation"].astype(str)
+df1["Squad"] =df1["Squad"].astype(str)
+df1["Comp"] =df1["Comp"].astype(str)
+df1["Pos"] =df1["Pos"].astype(str)
+df1["Age"] =df1["Age"].astype(str)
+df1["Age"] =df1["Age"].apply(lambda x : x[:2])
+df1["Age"] =df1["Age"].astype(float)
+df1["90s"] =df1["90s"].astype(float)
+df1["Gls"] =df1["Gls"].astype(float)
+df1["SoT/90"] =df1["SoT/90"].astype(float)
+df1["npxG"] =df1["npxG"].astype(float)
+df1["npxG/Sh"] =df1["npxG/Sh"].astype(float)
+df1["PK"] =df1["PK"].astype(float)
+
+#Create new columns
+df1["npG"] = df1["Gls"] -df1["PK"]
+
+# Create main dataframe
+list1 = df1.iloc[:,0]
+liga = pd.DataFrame()
+liga["Rk"] =list1
+
+# applying merge with more parameters
+liga = liga.merge(df1[["Player","Rk",'Pos','Squad','Nation',"Comp",'Age','90s','npG','npxG','SoT/90',"npxG/Sh"]], left_on="Rk", right_on="Rk",how = 'inner')
 
 
-    df4["SCA90"] =df4["SCA90"].astype(float)
 
-    liga = liga.merge(df4[["Rk",'SCA90']], left_on="Rk", right_on="Rk",how = 'inner')
-
-
-
-    df6 = scrape(url[6],matches[6])
-    df6["Rk"] =df6["Rk"].astype(int)
-    # replacing na values in college with No college
-    df6.fillna(0, inplace = True)
-
-    df6["Att 3rd"] =df6["Att 3rd"].astype(float)
-    df6["Att Pen"] =df6["Att Pen"].astype(float)
-    df6["Drib"] =df6["Att"].astype(float)
-    df6["Drib Succ%"] =df6["Succ%"].astype(float)
-    df6["PRec"] =df6["Rec"].astype(float)
-    df6["PPRec"] =df6["Prog"].astype(float)
+# Passing Stats
+df2 = scrape(url[2],matches[2])
+df2["Rk"] =df2["Rk"].astype(int)
+# replacing na values in college with No college
+df2.fillna(0, inplace = True)
 
 
-    liga = liga.merge(df6[["Rk","Att 3rd",'Att Pen','Drib','Drib Succ%','PRec',"PPRec"]], left_on="Rk", right_on="Rk",how = 'inner')
+list1 = df2.iloc[:, 9]
+df2["Passes Completed"] = list1
+list1 = df2.iloc[:, 11]
+df2["Passes%"] = list1
 
 
-    df5 = scrape(url[5],matches[5])
-    df5["Rk"] =df5["Rk"].astype(int)
-    df5.fillna(0, inplace = True)
-
-    df5["TklW"] =df5["TklW"].astype(float)
-    df5["Sh"] =df5["Sh"].astype(float)
-    df5["Int"] =df5["Int"].astype(float)
-    df5["Clr"] =df5["Clr"].astype(float)
-
-    # applying merge with more parameters
-    # don't run this more than once
-    liga = liga.merge(df5[["Rk","TklW",'Sh','Int','Clr']],left_on="Rk", right_on="Rk",how = 'inner')
+df2["xA"] =df2["xA"].astype(float)
+df2["Passes%"] =df2["Passes%"].astype(float)
+df2["1/3"] =df2["1/3"].astype(float)
+df2["KP"] =df2["KP"].astype(float)
+df2["CrsPA"] =df2["CrsPA"].astype(float)
+df2["PPA"] =df2["PPA"].astype(float)
+df2["Ast"] =df2["Ast"].astype(float)
+df2["Passes Completed"] =df2["Passes Completed"].astype(float)
+df2["Prog"] =df2["Prog"].astype(float)
 
 
-    df8 = scrape(url[8],matches[8])
-    df8["Rk"] =df8["Rk"].astype(int)
-    # replacing na values in college with No college
-    df8.fillna(0, inplace = True)
+# applying merge with more parameters
+liga = liga.merge(df2[["Rk",'Ast','xA','KP','1/3','PPA','CrsPA','Prog','Passes Completed','Passes%']], left_on="Rk", right_on="Rk",how = 'inner')
 
-    df8["FoulsC"] =df8["Fls"].astype(float)
-    df8["FoulsW"] =df8["Fld"].astype(float)
-    df8["Recov"] =df8["Recov"].astype(float)
-    df8["AerialW"] =df8["Won"].astype(float)
 
-    liga = liga.merge(df8[["Rk","FoulsC",'FoulsW','Recov','AerialW']],left_on="Rk", right_on="Rk",how = 'inner')
 
-    liga["Tkl+Int"] = liga["TklW"] + liga["Int"]
-    
-        
-    return liga
 
-liga = getting_data()
+# Pass Type Stats
+df3 = scrape(url[3],matches[3])
+df3["Rk"] =df3["Rk"].astype(int)
+# replacing na values in college with No college
+df3.fillna(0, inplace = True)
+
+
+df3["TB"] =df3["TB"].astype(float)
+df3["Sw"] =df3["Sw"].astype(float)
+df3["Crs"] =df3["Crs"].astype(float)
+
+# applying merge with more parameters
+# don't run this more than once
+liga = liga.merge(df3[["Rk",'TB','Sw','Crs']], left_on="Rk", right_on="Rk",how = 'inner')
+
+
+
+# GCA AND SCA STATS
+df4 = scrape(url[4],matches[4])
+df4["Rk"] =df4["Rk"].astype(int)
+# replacing na values in college with No college
+df4.fillna(0, inplace = True)
+
+
+df4["SCA90"] =df4["SCA90"].astype(float)
+
+# applying merge with more parameters
+# don't run this more than once
+liga = liga.merge(df4[["Rk",'SCA90']], left_on="Rk", right_on="Rk",how = 'inner')
+
+
+
+# POSSESSION STATS
+df6 = scrape(url[6],matches[6])
+df6["Rk"] =df6["Rk"].astype(int)
+# replacing na values in college with No college
+df6.fillna(0, inplace = True)
+
+df6["Att 3rd"] =df6["Att 3rd"].astype(float)
+df6["Att Pen"] =df6["Att Pen"].astype(float)
+df6["Drib"] =df6["Att"].astype(float)
+df6["Drib Succ%"] =df6["Succ%"].astype(float)
+df6["PRec"] =df6["Rec"].astype(float)
+df6["PPRec"] =df6["Prog"].astype(float)
+
+
+# applying merge with more parameters
+# don't run this more than once
+liga = liga.merge(df6[["Rk","Att 3rd",'Att Pen','Drib','Drib Succ%','PRec',"PPRec"]], left_on="Rk", right_on="Rk",how = 'inner')
+
+
+# DEFENSIVE STATS
+df5 = scrape(url[5],matches[5])
+df5["Rk"] =df5["Rk"].astype(int)
+# replacing na values in college with No college
+df5.fillna(0, inplace = True)
+
+df5["TklW"] =df5["TklW"].astype(float)
+df5["Sh"] =df5["Sh"].astype(float)
+df5["Int"] =df5["Int"].astype(float)
+df5["Clr"] =df5["Clr"].astype(float)
+
+# applying merge with more parameters
+# don't run this more than once
+liga = liga.merge(df5[["Rk","TklW",'Sh','Int','Clr']],left_on="Rk", right_on="Rk",how = 'inner')
+
+
+# MISCELLANEOUS STATS
+df8 = scrape(url[8],matches[8])
+df8["Rk"] =df8["Rk"].astype(int)
+# replacing na values in college with No college
+df8.fillna(0, inplace = True)
+
+df8["FoulsC"] =df8["Fls"].astype(float)
+df8["FoulsW"] =df8["Fld"].astype(float)
+df8["Recov"] =df8["Recov"].astype(float)
+df8["AerialW"] =df8["Won"].astype(float)
+
+# applying merge with more parameters
+# don't run this more than once
+liga = liga.merge(df8[["Rk","FoulsC",'FoulsW','Recov','AerialW']],left_on="Rk", right_on="Rk",how = 'inner')
+
+
+# FW TEMPLATE
+liga["Tkl+Int"] = liga["TklW"] + liga["Int"]
 
 
 
@@ -212,7 +225,7 @@ st.header("Create Pizza Plots for any player in Europe's Big 5 Leagues ")
 st.subheader("Compare stats with Big 5 or a specific league, set position and minimum 90s played")
 
 st.subheader("Data: FBREF Made by : Ligandro")
-st.dataframe(data=liga)
+
 st.text("Plot:")
 
 
@@ -224,6 +237,7 @@ x = st.sidebar.selectbox("Name of Player ",options = col_list)
 league = [ "eng Premier League","fr Ligue 1","de Bundesliga","it Serie A","es La Liga","Big 5"]
 League = st.sidebar.selectbox("Select League ",options = league)
 
+
 a3 = League
 if a3 != "Big 5":
     prem = liga[liga["Comp"] == League]
@@ -232,9 +246,8 @@ else:
     prem = liga.copy()
     League = a3
   
-  
 minutes = st.sidebar.slider("Select Minimum 90s Played",0,38)
- 
+  
 prem = prem[prem["90s"] >= minutes ]
 
 prem["npG"] =prem["npG"]/prem["90s"]
