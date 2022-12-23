@@ -354,10 +354,10 @@ def forward():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "Futura",size =13,color="black",fontweight="bold", va="center"
+            font = "Futura",size =10,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
-            font = "Futura",size =12,color="black",fontweight="bold", zorder=3,
+            font = "Futura",size =9,color="black",fontweight="bold", zorder=3,
             bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",
             boxstyle="round,pad=0.2", lw=1
@@ -501,10 +501,10 @@ def mid():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "Futura",size =13,color="black",fontweight="bold", va="center"
+            font = "Futura",size =10,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
-            font = "Futura",size =12,color="black",fontweight="bold", zorder=3,
+            font = "Futura",size =9,color="black",fontweight="bold", zorder=3,
             bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",
             boxstyle="round,pad=0.2", lw=1
