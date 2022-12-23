@@ -226,7 +226,7 @@ st.subheader("Compare stats with Big 5 or a specific league, set position and mi
 
 st.subheader("Data: FBREF Made by : Ligandro")
 
-st.text("Data:")
+st.text("Plot:")
 
 
 col_list = liga["Player"].values.tolist()
@@ -586,7 +586,7 @@ def defender():
 
 
 status1 = [ "No","Yes"]
-status = st.selectbox("Show Plot",options = status1)
+status = st.sidebar.selectbox("Show Plot",options = status1)
 
 if status =="Yes":
     if pos == "Forward":
