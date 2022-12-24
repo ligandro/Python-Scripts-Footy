@@ -91,7 +91,7 @@ def getting_data():
     df1["PK"] =df1["PK"].astype(float)
 
         #Create new columns
-    df1["npG"] = df1["Gls"] -df1["PK"]
+    df1["npG"] = df1["Gls"] -dfz1["PK"]
 
         # Create main dataframe
     list1 = df1.iloc[:,0]
@@ -220,6 +220,10 @@ st.subheader(":o: NOTE : Set minimum 90s appropriately,set league accordingly")
 st.subheader("Data: FBREF Made by : Ligandro")
 st.dataframe(data=liga)
 st.subheader(":bar_chart: Plot:")
+
+
+with open( "style.css" ) as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 
 
