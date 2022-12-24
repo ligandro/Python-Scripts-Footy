@@ -53,9 +53,6 @@ def scrape(url,m):
     df2= df2[df2.Player != "Player"]
     return df2
 
-
-st.text("Getting Data from Fbref site by scraping, this will take some time unfortunately")
-
 @st.cache
 def getting_data():
     df1 = scrape(url[1],matches[1])
@@ -212,7 +209,7 @@ with open( "style2.css" ) as css:
 
 
 
-st.title(":soccer: PIZZA PLOTTER :pizza: ")
+st.header(":soccer: PIZZA PLOTTER :pizza: ")
 
 st.subheader(" :o: Create Pizza Plots for any player in Europe's Big 5 Leagues ")
 st.subheader(" :o: Compare stats with Big 5 or a specific league, set position and minimum 90s played")
