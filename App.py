@@ -91,7 +91,7 @@ def getting_data():
     df1["PK"] =df1["PK"].astype(float)
 
         #Create new columns
-    df1["npG"] = df1["Gls"] -dfz1["PK"]
+    df1["npG"] = df1["Gls"] -df1["PK"]
 
         # Create main dataframe
     list1 = df1.iloc[:,0]
