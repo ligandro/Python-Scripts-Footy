@@ -592,7 +592,7 @@ def defender():
     stat.extend([playe[8],playe[24],
           playe[25], playe[27],playe[28],
           playe[39],playe[32],playe[34],playe[38],playe[37],
-          playe[15],playe[22],playe[18],playe[30],playe[17],playe[13]])
+          playe[15],playe[22],playe[18],playe[30],playe[23],playe[13]])
     lis = [9,14,24,25,27,28,39,33,36,37,19,20,15,22,18,13]
     params = []
     for x in lis:
@@ -611,7 +611,7 @@ def defender():
     params[11] = "Long\nBalls"
     params[12] = "Progressive\nPasses"
     params[13] = "Progressive\nPasses Recieved"
-    params[14] = "Crosses into\nPenalty Box"
+    params[14] = "Crosses"
     params[15] = "xA"
     
     
