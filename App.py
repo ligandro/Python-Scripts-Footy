@@ -351,7 +351,7 @@ def forward():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "monospace",size =10,color="black",fontweight="bold", va="center"
+            font = "monospace",size =11,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
             font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
@@ -498,7 +498,7 @@ def mid():
             edgecolor="#FAF7F3", zorder=2, linewidth=1
         ),                               # values to be used when plotting slices
         kwargs_params=dict(
-            font = "monospace",size =10,color="black",fontweight="bold", va="center"
+            font = "monospace",size =11,color="black",fontweight="bold", va="center"
         ),                               # values to be used when adding parameter
         kwargs_values=dict(
             font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
