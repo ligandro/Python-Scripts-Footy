@@ -212,7 +212,7 @@ st.subheader(" :o: Compare stats with Big 5 or a specific league, set position a
 st.subheader(":o: NOTE : Set minimum 90s appropriately,set league accordingly")
 st.subheader("Data: FBREF Made by : Ligandro")
 st.dataframe(data=liga)
-st.subheader("Plot:")
+st.subheader(":bar_chart: Plot:")
 
 
 col_list = liga["Player"].values.tolist()
