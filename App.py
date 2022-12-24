@@ -739,4 +739,4 @@ if status =="Yes":
         defender()
 
 
-st.subheader("Follow me on Twitter [@Ligandro22 >](https://twitter.com/Ligandro22) ")
+st.subheader("Follow me on Twitter [@Ligandro22](https://twitter.com/Ligandro22) ")
