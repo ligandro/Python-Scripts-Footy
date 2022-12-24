@@ -207,6 +207,8 @@ liga = getting_data()
 
 
 
+with open( "style2.css" ) as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 
 
@@ -670,7 +672,7 @@ def defender():
     fig.text(
     0.515, 1.02, f"{Name}-{Team}",
     path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-    ha="center", font = f'<style>{css.read()}</style>',size =32,color="black",fontweight="bold"
+    ha="center", font = "monospace",size =32,color="black",fontweight="bold"
     )
 
     # add subtitle
