@@ -593,7 +593,7 @@ def defender():
           playe[25], playe[27],playe[28],
           playe[39],playe[32],playe[34],playe[38],playe[37],
           playe[15],playe[22],playe[18],playe[30],playe[23],playe[13]])
-    lis = [8,24,25,27,28,39,32,34,38,37,15,22,15,18,30,23,13]
+    lis = [8,24,25,27,28,39,32,34,38,37,15,22,18,30,23,13]
     params = []
     for x in lis:
         params.append(liga.columns[x])
