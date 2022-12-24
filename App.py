@@ -222,6 +222,11 @@ st.dataframe(data=liga)
 st.subheader(":bar_chart: Plot:")
 
 
+with open( "style.css" ) as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+
+
+
 col_list = liga["Player"].values.tolist()
 
 x = st.sidebar.selectbox("Name of Player ",options = col_list)
