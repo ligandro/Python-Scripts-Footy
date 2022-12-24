@@ -49,7 +49,7 @@ def scrape(url,m):
     return df2
 
 
-st.text("Getting Data from Fbref site by scraping, this will take some time unfortunately :hourglass: ")
+st.text("Getting Data from Fbref site by scraping, this will take some time unfortunately")
 
 @st.cache
 def getting_data():
@@ -207,9 +207,9 @@ liga = getting_data()
 
 st.title(":soccer: Pizza Plotter :pizza: ")
 
-st.header("Create Pizza Plots for any player in Europe's Big 5 Leagues ")
-st.subheader("Compare stats with Big 5 or a specific league, set position and minimum 90s played")
-st.text("NOTE : Set minimum 90s appropriately,set league accordingly")
+st.subheader(" :o: Create Pizza Plots for any player in Europe's Big 5 Leagues ")
+st.subheader(" :o: Compare stats with Big 5 or a specific league, set position and minimum 90s played")
+st.subheader(":o: NOTE : Set minimum 90s appropriately,set league accordingly")
 st.subheader("Data: FBREF Made by : Ligandro")
 st.dataframe(data=liga)
 st.subheader("Plot:")
@@ -586,4 +586,4 @@ if status =="Yes":
         defender()
 
 
-st.text("Follow me on Twitter @Ligandro22")
+st.subheader("Follow me on Twitter @Ligandro22")
