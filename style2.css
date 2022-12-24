@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap'); 
 
 html, body, [class*="css"] {
-    font-family: 'Poppins', sans-serif; 
+    font-family: 'Jost, sans-serif; 
     font-size: 40px;
     font-weight: 500;
     color: #FFFFFF;
