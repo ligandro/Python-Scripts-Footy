@@ -431,7 +431,7 @@ def mid():
     stat = []
     stat.extend([playe[9],playe[14],playe[24],
           playe[25], playe[27],playe[28],
-          playe[39],playe[33],playe[36],playe[37],
+          playe[39],playe[38],playe[36],playe[37],
            playe[19], playe[20], playe[15],playe[22],playe[18],playe[13]])
     lis = [9,14,24,25,27,28,39,33,36,37,19,20,15,22,18,13]
     params = []
@@ -570,8 +570,150 @@ def mid():
     st.pyplot(fig)
    
 def defender():
-    print(1)
+    kik = prem[(prem["Pos"] == "DF") | (prem["Pos"] == "DF,MF") | (prem["Pos"] == "DF,FW")]
+    
+    # select stats
+    playe = list(player.iloc[0])
 
+    
+    stat = []
+    stat.extend([playe[8],playe[24],
+          playe[25], playe[27],playe[28],
+          playe[39],playe[32],playe[34],playe[38],playe[37],
+          playe[15],playe[22],playe[18],playe[30],playe[17],playe[13]])
+    lis = [9,14,24,25,27,28,39,33,36,37,19,20,15,22,18,13]
+    params = []
+    for x in lis:
+        params.append(liga.columns[x])
+    params[0] = "Non-Penalty\nGoals"
+    params[1] = "Shot Creating\nActions"
+    params[2] = "Attacking 3rd\nTouches"
+    params[3] = "Dribbles\nAttempted"
+    params[4] = "Dribble\nSuccess%"
+    params[5] = "Tackles+\nInterceptions"
+    params[6] = "Shots\nBlocked"
+    params[7] = "Clearances"
+    params[8] = "Aerials\nWon"
+    params[9] = "Ball\nRecoveries"
+    params[10] = "Final 3rd\nPasses"
+    params[11] = "Long\nBalls"
+    params[12] = "Progressive\nPasses"
+    params[13] = "Progressive\nPasses Recieved"
+    params[14] = "Crosses into\nPenalty Box"
+    params[15] = "xA"
+    
+    
+    
+    # minimum range value and maximum range value for parameters
+    min_range= []
+    max_range =[]
+    for x in lis:
+        min_range.append(kik.iloc[:,x].min())
+        max_range.append(kik.iloc[:,x].max())          
+    stat1 = [ round(x, 2) for x in stat]         
+    # color for the slices and text
+    slice_colors = ["#FF6161"] * 2 + ["#56AEFF"] * 3 + ["#94C450"] * 5 + ["#FFD230"] * 6
+    text_colors = ["black"] * 16 
+    
+    # instantiate PyPizza class
+    baker = PyPizza(
+        params=params,
+        min_range=min_range,        # min range values
+        max_range=max_range, 
+        background_color="#FAF7F3",
+        straight_line_color="#FAF7F3",  # color for straight lines
+        straight_line_lw=1,             # linewidth for straight lines
+        last_circle_lw=0,               # linewidth of last circle
+        other_circle_lw=1,              # linewidth for other circles
+        inner_circle_size=10,
+        other_circle_ls="-." 
+    )
+
+    colors = []
+    for x in params:
+        colors.append("#EFEEED")
+    # plot pizza
+    fig, ax = baker.make_pizza(
+        stat1,                          # list of values
+        figsize=(8, 8.5),                # adjust figsize according to your need
+        color_blank_space=slice_colors,        # use same color to fill blank space
+        slice_colors=slice_colors,       # color for individual slices
+        value_colors=text_colors,        # color for the value-text
+        value_bck_colors=slice_colors,   # color for the blank spaces
+        blank_alpha=0.4,                 # alpha for blank-space colors
+        kwargs_slices=dict(
+            edgecolor="#FAF7F3", zorder=2, linewidth=1
+        ),                               # values to be used when plotting slices
+        kwargs_params=dict(
+            font = "monospace",size =11,color="black",fontweight="bold", va="center"
+        ),                               # values to be used when adding parameter
+        kwargs_values=dict(
+            font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
+            bbox=dict(
+            edgecolor="#000000", facecolor="cornflowerblue",
+            boxstyle="round,pad=0.2", lw=1
+            )
+        )    
+    )
+
+
+    fig.set_facecolor('#FAF7F3')
+    ax.patch.set_facecolor('#FAF7F3')
+
+    
+    # add title
+    fig.text(
+    0.515, 1.02, f"{Name}-{Team}",
+    path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
+    ha="center", font = "monospace",size =32,color="black",fontweight="bold"
+    )
+
+    # add subtitle
+    fig.text(
+    0.515, 0.982,
+    f"Defender Stats/90 | {League} Defenders DF,DF/FW,DF,MF",
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
+    )
+    fig.text(
+    0.515, 0.948,
+    f" 90s Played : {time} | Age : {age} | Season : 22-23",
+    ha="center", font = "monospace",size =13,color="black",fontweight="bold"
+    )
+
+
+
+    # add credits
+    notes = f'Only Players with 90s >= {minutes}'
+    CREDIT_1 = "Data : Fbref"
+    CREDIT_2 = "MPL Soccer"
+
+    fig.text(
+    0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
+    font = "monospace",size =12,color="black",fontweight="bold",
+    ha="right"
+    )
+
+    # add image
+    im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
+    ax_image = add_image(
+    im1, fig, left=0.4778, bottom=0.46, width=0.07, height=0.07
+    ) 
+    
+    
+     # these values might differ when you are plotting
+    im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
+    ax_image = add_image(
+    im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
+    )   # these values might differ when you are plotting
+
+
+    # these values might differ when you are plotting
+    im3 = plt.imread('https://i.postimg.cc/nrzX68LJ/6.png')
+    ax_image = add_image(
+    im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
+    )   # these values might differ when you are plotting 
+   
+    st.pyplot(fig)
 
 
 status1 = [ "No","Yes"]
