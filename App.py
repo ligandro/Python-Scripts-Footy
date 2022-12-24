@@ -40,7 +40,7 @@ url = ["https://fbref.com/en/comps/Big5/stats/players/Big-5-European-Leagues-Sta
                  
 matches = ["Stats","Shooting","Passing","Pass","Goal","Defensive","Possession","Playing","Miscellaneous"]                 
 
-with open( "app\style.css" ) as css:
+with open( "style.css" ) as css:
     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 
