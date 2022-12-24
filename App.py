@@ -212,7 +212,7 @@ with open( "style2.css" ) as css:
 
 
 
-st.title(":soccer: Pizza Plotter :pizza: ")
+st.title(":soccer: PIZZA PLOTTER :pizza: ")
 
 st.subheader(" :o: Create Pizza Plots for any player in Europe's Big 5 Leagues ")
 st.subheader(" :o: Compare stats with Big 5 or a specific league, set position and minimum 90s played")
