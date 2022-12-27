@@ -551,7 +551,7 @@ def mid():
 
 
     # add credits
-    notes = 'Only Players with 90s >= 3'
+    notes = f'Only Players with 90s >= {minutes}'
     CREDIT_1 = "Data : Fbref"
     CREDIT_2 = "MPL Soccer"
 
