@@ -56,7 +56,7 @@ def scrape(url,m):
     df2= df2[df2.Player != "Player"]
     return df2
 
-@st.cache
+# @st.cache
 def getting_data():
     df1 = scrape(url[1],matches[1])
     df1["Rk"] =df1["Rk"].astype(int)
