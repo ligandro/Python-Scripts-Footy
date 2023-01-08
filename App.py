@@ -204,7 +204,7 @@ def getting_data():
     return liga
 
 liga = pd.read_csv("data/streamlit.csv")
-
+del liga["Unnamed:0"]
 
 
 with open( "style2.css" ) as css:
