@@ -203,7 +203,7 @@ def getting_data():
         
     return liga
 
-liga = pd.read_csv("/Users/ligandrosy/Downloads/streamlit.csv")
+liga = pd.read_csv("data/streamlit.csv")
 
 
 
