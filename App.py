@@ -690,7 +690,7 @@ def defender():
     # add subtitle
     fig.text(
     0.515, 0.982,
-    f"Defender Stats/90 | {League} Defenders DF,DF/FW,DF,MF",
+    f"Defender Stats/90 | {League} Defenders DF,DF/FW,DF/MF",
     ha="center", font = "monospace",size =13,color="black",fontweight="bold"
     )
     fig.text(
