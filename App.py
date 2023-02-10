@@ -450,9 +450,9 @@ def mid():
     stat = []
     stat.extend([playe[8],playe[14],playe[24],
           playe[31], playe[27],playe[28],
-          playe[41],playe[33],playe[38],playe[39],
+          playe[41],playe[40],playe[38],playe[39],
            playe[19], playe[20], playe[15],playe[22],playe[18],playe[13]])
-    lis = [8,14,24,31,27,28,41,33,38,39,19,20,15,22,18,13]
+    lis = [8,14,24,31,27,28,41,40,38,39,19,20,15,22,18,13]
     params = []
     for x in lis:
         params.append(liga.columns[x])
