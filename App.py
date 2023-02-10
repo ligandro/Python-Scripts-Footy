@@ -279,6 +279,9 @@ prem["FoulsW"] =prem["FoulsW"]/prem["90s"]
 prem["Recov"] =prem["Recov"]/prem["90s"]
 prem["AerialW"] =prem["AerialW"]/prem["90s"]
 prem["Tkl+Int"] =prem["Tkl+Int"]/prem["90s"]
+prem["ProgC"] =prem["ProgC"]/prem["90s"]
+prem["CPA"] =prem["CPA"]/prem["90s"]
+
 
 
 player = prem.loc[prem['Player']==x]
@@ -299,11 +302,11 @@ def forward():
     playe = list(player.iloc[0])
 
     stat = []
-    stat.extend([playe[8],playe[9],playe[11],playe[10],playe[24],
-          playe[27],playe[28],playe[25],
-          playe[39],playe[38],playe[36],
+     stat.extend([playe[8],playe[9],playe[11],playe[10],playe[24],
+          playe[27],playe[28],playe[32],
+          playe[41],playe[40],playe[38],
           playe[29],playe[19] ,playe[23],playe[14],playe[13]])
-    lis = [8,9,11,10,24,27,28,25,39,38,36,29,19,23,14,13]
+    lis = [8,9,11,10,24,27,28,32,41,40,38,29,19,23,14,13]
     params = []
     for x in lis:
         params.append(liga.columns[x])
@@ -312,7 +315,7 @@ def forward():
     params[4] = "Shot Creating\nActions"
     params[5] = "Dribbles\nAttempted"
     params[6] = "Dribble\nSuccess%"
-    params[7] = "Attacking 3rd\nTouches"
+    params[7] = "Carries into\nPen Box"
     params[8] = "Tackles+\nInterceptions"
     params[9] = "Aerials\nWon"
     params[10] = "Fouls\nWon"
@@ -321,6 +324,7 @@ def forward():
     params[13] = "Crosses"
     params[14] = "Key\nPasses"
     params[15] = "xA"
+    
     
     
     
@@ -444,18 +448,18 @@ def mid():
     playe = list(player.iloc[0])
 
     stat = []
-    stat.extend([playe[9],playe[14],playe[24],
-          playe[25], playe[27],playe[28],
-          playe[39],playe[38],playe[36],playe[37],
+    stat.extend([playe[8],playe[14],playe[24],
+          playe[31], playe[27],playe[28],
+          playe[41],playe[33],playe[38],playe[39],
            playe[19], playe[20], playe[15],playe[22],playe[18],playe[13]])
-    lis = [9,14,24,25,27,28,39,33,36,37,19,20,15,22,18,13]
+    lis = [8,14,24,31,27,28,41,33,38,39,19,20,15,22,18,13]
     params = []
     for x in lis:
         params.append(liga.columns[x])
-    params[0] = "Non-Penalty\nxG"
+    params[0] = "Non-Penalty\nGoals"
     params[1] = "Key\nPasses"
     params[2] = "Shot Creating\nActions"
-    params[3] = "Attacking 3rd\nTouches"
+    params[3] = "Progressive\nCarries"
     params[4] = "Dribbles\nAttempted"
     params[5] = "Dribble\nSuccess%"
     params[6] = "Tackles+\nInterceptions"
@@ -593,29 +597,29 @@ def defender():
     
     stat = []
     stat.extend([playe[8],playe[24],
-          playe[25], playe[27],playe[28],
-          playe[39],playe[32],playe[34],playe[38],playe[37],
-          playe[15],playe[22],playe[18],playe[30],playe[23],playe[13]])
-    lis = [8,24,25,27,28,39,32,34,38,37,15,22,18,30,23,13]
+          playe[31], playe[27],playe[28],
+          playe[41],playe[34],playe[36],playe[40],playe[39],
+          playe[15],playe[22],playe[18],playe[30],playe[17],playe[13]])
+    lis = [8,24,31,27,28,41,34,36,40,39,15,22,18,30,17,13]
     params = []
     for x in lis:
         params.append(liga.columns[x])
-    params[0] = "Non-Penalty\nGoals"
-    params[1] = "Shot Creating\nActions"
-    params[2] = "Attacking 3rd\nTouches"
-    params[3] = "Dribbles\nAttempted"
-    params[4] = "Dribble\nSuccess%"
-    params[5] = "Tackles+\nInterceptions"
-    params[6] = "Shots\nBlocked"
-    params[7] = "Clearances"
-    params[8] = "Aerials\nWon"
-    params[9] = "Ball\nRecoveries"
-    params[10] = "Final 3rd\nPasses"
-    params[11] = "Long\nBalls"
-    params[12] = "Progressive\nPasses"
-    params[13] = "Progressive\nPasses Recieved"
-    params[14] = "Crosses"
-    params[15] = "xA"
+    params[0] = "Non-Penalty\nGoals\n      "
+    params[1] = "Shot Creating\nActions\n      "
+    params[2] = "Progressive\nCarries\n      "
+    params[3] = "Dribbles\nAttempted\n      "
+    params[4] = "Dribble\nSuccess%\n      "
+    params[5] = "     \nTackles+\nInterceptions"
+    params[6] = "     \nShots\nBlocked"
+    params[7] = "     \nClearances"
+    params[8] = "     \nAerials\nWon"
+    params[9] = "     \nBall\nRecoveries"
+    params[10] = "     \nFinal 3rd\nPasses"
+    params[11] = "     \nLong\nBalls"
+    params[12] = "Progressive\nPasses\n      "
+    params[13] = "Progressive\nPasses Recieved\n      "
+    params[14] = "Crosses into\nPenalty Box\n      "
+    params[15] = "xA\n  
     
     
     
