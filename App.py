@@ -302,7 +302,7 @@ def forward():
     playe = list(player.iloc[0])
 
     stat = []
-     stat.extend([playe[8],playe[9],playe[11],playe[10],playe[24],
+    stat.extend([playe[8],playe[9],playe[11],playe[10],playe[24],
           playe[27],playe[28],playe[32],
           playe[41],playe[40],playe[38],
           playe[29],playe[19] ,playe[23],playe[14],playe[13]])
