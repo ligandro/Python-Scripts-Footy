@@ -619,7 +619,7 @@ def defender():
     params[12] = "Progressive\nPasses\n      "
     params[13] = "Progressive\nPasses Recieved\n      "
     params[14] = "Crosses into\nPenalty Box\n      "
-    params[15] = "xA\n  
+    params[15] = "xA\n   "
     
     
     
