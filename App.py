@@ -281,6 +281,7 @@ prem["AerialW"] =prem["AerialW"]/prem["90s"]
 prem["Tkl+Int"] =prem["Tkl+Int"]/prem["90s"]
 prem["ProgC"] =prem["ProgC"]/prem["90s"]
 prem["CPA"] =prem["CPA"]/prem["90s"]
+prem["Long"] =prem["Long"]/prem["90s"]
 
 
 
