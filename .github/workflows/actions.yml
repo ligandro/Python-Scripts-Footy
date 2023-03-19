@@ -2,7 +2,7 @@ name: run App.py
 
 on:
   schedule:
-    - cron: '38 17 * * SUN' # At 00:00 every TUESDAY  0 0 * * TUE'
+    - cron: '42 17 * * SUN' # At 00:00 every TUESDAY  0 0 * * TUE'
 
 jobs:
   build:
