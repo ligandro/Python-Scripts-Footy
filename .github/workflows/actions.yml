@@ -1,8 +1,8 @@
-name: run App.py
+name: run streamlit.py
 
 on:
   schedule:
-    - cron: '42 17 * * SUN' # At 00:00 every TUESDAY  0 0 * * TUE'
+    - cron: '40 17 * * SUN' # At 00:00 every TUESDAY  0 0 * * TUE'
 
 jobs:
   build:
@@ -25,7 +25,7 @@ jobs:
       - name: execute py script # run main.py
         env:
           SOME_SECRET: ${{ secrets.SOME_SECRET }}
-        run: python App.py
+        run: python streamlit.py
           
       - name: commit files
         run: |
