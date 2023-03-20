@@ -2,7 +2,7 @@ name: run streamlit.py
 
 on:
   schedule:
-    - cron: '44 17 * * SUN' # At 00:00 every TUESDAY  0 0 * * TUE'
+    - cron: '44 17 * * TUE' # At 00:00 every TUESDAY  0 0 * * TUE'
 
 jobs:
   build:
