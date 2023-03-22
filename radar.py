@@ -571,7 +571,7 @@ def show_radar():
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
                                         font="Futura",
                                         ha='right', va='center', color='#FF3030')
-        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+        title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
                                         font="Futura",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
@@ -601,7 +601,7 @@ def show_radar():
         CREDIT_1 = "Viz : Ligandro22"
 
         fig.text(
-        0.19, 0.005, f"{CREDIT_1}",
+        0.205, 0.005, f"{CREDIT_1}",
         font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
@@ -701,7 +701,7 @@ def show_radar():
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
                                         font="Futura",
                                         ha='right', va='center', color='#FF3030')
-        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+        title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
                                         font="Futura",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
@@ -731,7 +731,7 @@ def show_radar():
         CREDIT_1 = "Viz : Ligandro22"
 
         fig.text(
-        0.19, 0.005, f"{CREDIT_1}",
+        0.205, 0.005, f"{CREDIT_1}",
         font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
@@ -831,7 +831,7 @@ def show_radar():
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
                                         font="Futura",
                                         ha='right', va='center', color='#FF3030')
-        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+        title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
                                         font="Futura",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
@@ -861,7 +861,7 @@ def show_radar():
         CREDIT_1 = "Viz : Ligandro22"
 
         fig.text(
-        0.19, 0.005, f"{CREDIT_1}",
+        0.205, 0.005, f"{CREDIT_1}",
         font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
