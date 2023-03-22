@@ -1,6 +1,6 @@
 import streamlit as st
 from pizza import show_pizza
-#from radar import show_radar
+from radar import show_radar
 
 page = st.selectbox("Pizza Plots or Comparision Radars", ("Pizza", "Radar"))
 page_bg_img = f"""
@@ -24,3 +24,5 @@ right: 2rem;
 st.markdown(page_bg_img, unsafe_allow_html=True)
 if page == "Pizza":
     show_pizza()
+else:
+    show_radar()
