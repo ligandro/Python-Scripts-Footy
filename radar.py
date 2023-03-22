@@ -870,7 +870,7 @@ def show_radar():
 
 
     status1 = [ "No","Yes"]
-    status = st.sidebar.selectbox("Show Plot",options = status1)
+    status = st.sidebar.radio("Show Plot",(status1))
 
     if status =="Yes":
         if pos == "Forward":
