@@ -28,9 +28,6 @@ def show_pizza():
     import datetime
 
 
-    # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
-    st.set_page_config(page_title="Pizza", page_icon=":pizza:", layout="wide")
-
 
     url = ["https://fbref.com/en/comps/Big5/stats/players/Big-5-European-Leagues-Stats",
                      "https://fbref.com/en/comps/Big5/shooting/players/Big-5-European-Leagues-Stats",
