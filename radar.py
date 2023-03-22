@@ -388,7 +388,7 @@ def show_radar():
 
 
 
-    st.header(":soccer: PLAYER COMPARISION RADARS :pizza: ")
+    st.header(":soccer: PLAYER COMPARISION RADARS :space_invader: ")
 
     st.subheader(" :o: Create Radar Plots to compare any two player in Europe's Big 5 Leagues ")
     st.subheader(" :o: Compare stats with Big 5 or a specific league, set position and minimum 90s played")
