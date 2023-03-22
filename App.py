@@ -21,8 +21,6 @@ right: 2rem;
 </style>
 """
 
-    # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Pizza", page_icon=":pizza:", layout="wide")
 st.markdown(page_bg_img, unsafe_allow_html=True)
 if page == "Pizza":
     show_pizza()
