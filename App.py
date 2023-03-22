@@ -2,7 +2,7 @@ import streamlit as st
 from pizza import show_pizza
 from radar import show_radar
 
-page = st.sidebar.selectbox("Radar Or Predict", ("Predict", "Explore"))
+page = st.sidebar.selectbox("Pizza Plots or Comparision Radars", ("Pizza", "Radar"))
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
@@ -22,7 +22,7 @@ right: 2rem;
 """
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
-if page == "Predict":
-    show_predict_page()
+if page == "Pizza":
+    show_pizza()
 else:
-    show_explore_page()
+    show_radar()
