@@ -204,7 +204,7 @@ def show_radar():
     del liga["Unnamed: 0"]
     
     from mplsoccer import Radar
-""" Functions to plot a grid of axes with an endnote and title."""
+    """ Functions to plot a grid of axes with an endnote and title."""
 
     import matplotlib.pyplot as plt
     import numpy as np
