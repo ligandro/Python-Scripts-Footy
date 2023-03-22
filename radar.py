@@ -202,6 +202,185 @@ def show_radar():
 
     liga = pd.read_csv("data/streamlit.csv")
     del liga["Unnamed: 0"]
+    
+    from mplsoccer import Radar
+""" Functions to plot a grid of axes with an endnote and title."""
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    __all__ = ['_grid_dimensions', '_draw_grid', 'grid', 'grid_dimensions']
+
+
+    def _grid_dimensions(ax_aspect=1, figheight=9, nrows=1, ncols=1,
+                         grid_height=0.715, grid_width=0.95, space=0.05,
+                         left=None, bottom=None,
+                         endnote_height=0, endnote_space=0.01,
+                         title_height=0, title_space=0.01,
+                         ):
+
+        # dictionary for holding dimensions
+        dimensions = {'figheight': figheight, 'nrows': nrows, 'ncols': ncols,
+                      'grid_height': grid_height, 'grid_width': grid_width,
+                      'title_height': title_height, 'endnote_height': endnote_height,
+                      }
+
+        if left is None:
+            left = (1 - grid_width) / 2
+
+        if title_height == 0:
+            title_space = 0
+
+        if endnote_height == 0:
+            endnote_space = 0
+
+        error_msg_height = ('The axes extends past the figure height. '
+                            'Reduce one of the bottom, endnote_height, endnote_space, grid_height, '
+                            'title_space or title_height so the total is ≤ 1.')
+        error_msg_width = ('The grid axes extends past the figure width. '
+                           'Reduce one of the grid_width or left so the total is ≤ 1.')
+
+        axes_height = (endnote_height + endnote_space + grid_height +
+                       title_height + title_space)
+        if axes_height > 1:
+            raise ValueError(error_msg_height)
+
+        if bottom is None:
+            bottom = (1 - axes_height) / 2
+
+        if bottom + axes_height > 1:
+            raise ValueError(error_msg_height)
+
+        if left + grid_width > 1:
+            raise ValueError(error_msg_width)
+
+        dimensions['left'] = left
+        dimensions['bottom'] = bottom
+        dimensions['title_space'] = title_space
+        dimensions['endnote_space'] = endnote_space
+
+        if (nrows > 1) and (ncols > 1):
+            dimensions['figwidth'] = figheight * grid_height / grid_width * (((1 - space) * ax_aspect *
+                                                                              ncols / nrows) +
+                                                                             (space * (ncols - 1) / (
+                                                                                     nrows - 1)))
+            dimensions['spaceheight'] = grid_height * space / (nrows - 1)
+            dimensions['spacewidth'] = dimensions['spaceheight'] * figheight / dimensions['figwidth']
+            dimensions['axheight'] = grid_height * (1 - space) / nrows
+
+        elif (nrows > 1) and (ncols == 1):
+            dimensions['figwidth'] = figheight * grid_height / grid_width * (
+                    1 - space) * ax_aspect / nrows
+            dimensions['spaceheight'] = grid_height * space / (nrows - 1)
+            dimensions['spacewidth'] = 0
+            dimensions['axheight'] = grid_height * (1 - space) / nrows
+
+        elif (nrows == 1) and (ncols > 1):
+            dimensions['figwidth'] = figheight * grid_height / grid_width * (space + ax_aspect * ncols)
+            dimensions['spaceheight'] = 0
+            dimensions['spacewidth'] = grid_height * space * figheight / dimensions['figwidth'] / (
+                    ncols - 1)
+            dimensions['axheight'] = grid_height
+
+        else:  # nrows=1, ncols=1
+            dimensions['figwidth'] = figheight * grid_height * ax_aspect / grid_width
+            dimensions['spaceheight'] = 0
+            dimensions['spacewidth'] = 0
+            dimensions['axheight'] = grid_height
+
+        dimensions['axwidth'] = dimensions['axheight'] * ax_aspect * figheight / dimensions['figwidth']
+
+        return dimensions
+
+
+    def _draw_grid(dimensions, left_pad=0, right_pad=0, axis=True, grid_key='grid'):
+
+        dims = dimensions
+        bottom_coordinates = np.tile(dims['spaceheight'] + dims['axheight'],
+                                     reps=dims['nrows'] - 1).cumsum()
+        bottom_coordinates = np.insert(bottom_coordinates, 0, 0.)
+        bottom_coordinates = np.repeat(bottom_coordinates, dims['ncols'])
+        grid_bottom = dims['bottom'] + dims['endnote_height'] + dims['endnote_space']
+        bottom_coordinates = bottom_coordinates + grid_bottom
+        bottom_coordinates = bottom_coordinates[::-1]
+
+        left_coordinates = np.tile(dims['spacewidth'] + dims['axwidth'],
+                                   reps=dims['ncols'] - 1).cumsum()
+        left_coordinates = np.insert(left_coordinates, 0, 0.)
+        left_coordinates = np.tile(left_coordinates, dims['nrows'])
+        left_coordinates = left_coordinates + dims['left']
+
+        fig = plt.figure(figsize=(dims['figwidth'], dims['figheight']))
+        axs = []
+        for idx, bottom_coord in enumerate(bottom_coordinates):
+            axs.append(fig.add_axes((left_coordinates[idx], bottom_coord,
+                                     dims['axwidth'], dims['axheight'])))
+        axs = np.squeeze(np.array(axs).reshape((dims['nrows'], dims['ncols'])))
+        if axs.size == 1:
+            axs = axs.item()
+        result_axes = {grid_key: axs}
+
+        title_left = dims['left'] + left_pad
+        title_width = dims['grid_width'] - left_pad - right_pad
+
+        if dims['title_height'] > 0:
+            ax_title = fig.add_axes(
+                (title_left, grid_bottom + dims['grid_height'] + dims['title_space'],
+                 title_width, dims['title_height']))
+            if axis is False:
+                ax_title.axis('off')
+            result_axes['title'] = ax_title
+
+        if dims['endnote_height'] > 0:
+            ax_endnote = fig.add_axes((title_left, dims['bottom'],
+                                       title_width, dims['endnote_height']))
+            if axis is False:
+                ax_endnote.axis('off')
+            result_axes['endnote'] = ax_endnote
+
+        if dims['title_height'] == 0 and dims['endnote_height'] == 0:
+            return fig, result_axes[grid_key]  # no dictionary if just grid
+        return fig, result_axes  # else dictionary
+
+
+    def grid(ax_aspect=1, figheight=9, nrows=1, ncols=1,
+             grid_height=0.715, grid_width=0.95, space=0.05,
+             left=None, bottom=None,
+             endnote_height=0, endnote_space=0.01,
+             title_height=0, title_space=0.01, axis=True, grid_key='grid'):
+
+
+        dimensions = _grid_dimensions(ax_aspect=ax_aspect, figheight=figheight, nrows=nrows,
+                                      ncols=ncols,
+                                      grid_height=grid_height, grid_width=grid_width, space=space,
+                                      left=left, bottom=bottom,
+                                      endnote_height=endnote_height, endnote_space=endnote_space,
+                                      title_height=title_height, title_space=title_space,
+                                      )
+        fig, ax = _draw_grid(dimensions, axis=axis, grid_key=grid_key)
+        return fig, ax
+
+
+
+    def grid_dimensions(ax_aspect, figwidth, figheight, nrows, ncols, max_grid, space):
+
+        if ncols > 1 and nrows == 1:
+            grid1 = max_grid * figheight / figwidth * (space + ax_aspect * ncols)
+            grid2 = max_grid / figheight * figwidth / (space + ax_aspect * ncols)
+        elif ncols > 1 or nrows > 1:
+            extra = space * (ncols - 1) / (nrows - 1)
+            grid1 = max_grid * figheight / figwidth * (((1 - space) * ax_aspect *
+                                                        ncols / nrows) + extra)
+            grid2 = max_grid / figheight * figwidth / (((1 - space) * ax_aspect *
+                                                        ncols / nrows) + extra)
+        else:  # nrows=1, ncols=1
+            grid1 = max_grid * figheight / figwidth * ax_aspect
+            grid2 = max_grid / figheight * figwidth / ax_aspect
+
+        # decide whether the max_grid is the grid_width or grid_height and set the other value
+        if (grid1 > 1) | ((grid2 >= grid1) & (grid2 <= 1)):
+            return max_grid, grid2
+        return grid1, max_grid
 
 
     with open( "style2.css" ) as css:
@@ -209,9 +388,9 @@ def show_radar():
 
 
 
-    st.header(":soccer: PIZZA PLOTTER :pizza: ")
+    st.header(":soccer: PLAYER COMPARISION RADARS :pizza: ")
 
-    st.subheader(" :o: Create Pizza Plots for any player in Europe's Big 5 Leagues ")
+    st.subheader(" :o: Create Radar Plots to compare any two player in Europe's Big 5 Leagues ")
     st.subheader(" :o: Compare stats with Big 5 or a specific league, set position and minimum 90s played")
     st.subheader(":o: NOTE : Set minimum 90s appropriately,set league accordingly")
     st.subheader("Data: FBREF Made by : Ligandro")
@@ -228,8 +407,8 @@ def show_radar():
 
     col_list = liga["Player"].values.tolist()
 
-    x = st.sidebar.selectbox("Name of Player ",options = col_list)
-
+    x1 = st.sidebar.selectbox("Name of Player 1 ",options = col_list)
+    x2 = st.sidebar.selectbox("Name of Player 2 ",options = col_list)
 
     league = [ "eng Premier League","fr Ligue 1","de Bundesliga","it Serie A","es La Liga","Big 5"]
     League = st.sidebar.selectbox("Select League ",options = league)
@@ -246,7 +425,8 @@ def show_radar():
     minutes = st.sidebar.slider("Select Minimum 90s Played",0,38)
 
     prem = prem[prem["90s"] >= minutes ]
-
+    prem["Long"] =prem["Long"].astype(float)
+    
     prem["npG"] =prem["npG"]/prem["90s"]
     prem["npxG"] =prem["npxG"]/prem["90s"]
     prem["Ast"] =prem["Ast"]/prem["90s"]
@@ -282,11 +462,18 @@ def show_radar():
 
 
 
-    player = prem.loc[prem['Player']==x]
-    time = float(player.iloc[0,7])
-    Name = str(player.iloc[0,1])
-    Team = str(player.iloc[0,3])
-    age =player.iloc[0,6]
+    player1 = prem.loc[prem['Player']==x1]
+    player2 = prem.loc[prem['Player']==x2]
+
+    time1 = float(player1.iloc[0,7])
+    Name1 = str(player1.iloc[0,1])
+    Team1 = str(player1.iloc[0,3])
+    age1 =player1.iloc[0,6]
+
+    time2 = float(player2.iloc[0,7])
+    Name2 = str(player2.iloc[0,1])
+    Team2 = str(player2.iloc[0,3])
+    age2 =player2.iloc[0,6]
 
 
     pos1 = [ "Forward","Midfielder","Defender"]
@@ -297,13 +484,21 @@ def show_radar():
         kik = prem[(prem["Pos"] == "FW") | (prem["Pos"] == "FW,DF") | (prem["Pos"] == "FW,MF")| (prem["Pos"] == "MF,FW")]
 
         # select stats
-        playe = list(player.iloc[0])
+        playe1 = list(player1.iloc[0])
+        stat1 = []
+        stat1.extend([playe1[8],playe1[9],playe1[11],playe1[10],playe1[24],
+              playe1[27],playe1[28],playe1[32],
+              playe1[41],playe1[40],playe1[38],
+              playe1[29],playe1[19] ,playe1[23],playe1[14],playe1[13]])
+        # select stats
+        playe2 = list(player2.iloc[0])
+        stat2 = []
+        stat2.extend([playe2[8],playe2[9],playe2[11],playe2[10],playe2[24],
+              playe2[27],playe2[28],playe2[32],
+              playe2[41],playe2[40],playe2[38],
+              playe2[29],playe2[19] ,playe2[23],playe2[14],playe2[13]])
 
-        stat = []
-        stat.extend([playe[8],playe[9],playe[11],playe[10],playe[24],
-              playe[27],playe[28],playe[32],
-              playe[41],playe[40],playe[38],
-              playe[29],playe[19] ,playe[23],playe[14],playe[13]])
+
         lis = [8,9,11,10,24,27,28,32,41,40,38,29,19,23,14,13]
         params = []
         for x in lis:
@@ -325,82 +520,68 @@ def show_radar():
 
 
 
-
-
+        lower_is_better = []
         # minimum range value and maximum range value for parameters
         min_range= []
         max_range =[]
         for x in lis:
             min_range.append(kik.iloc[:,x].min())
             max_range.append(kik.iloc[:,x].max())          
-        stat1 = [ round(x, 2) for x in stat]         
-        # color for the slices and text
-        slice_colors = ["#FF6161"] * 5 + ["#56AEFF"] * 3 + ["#94C450"] * 3 + ["#FFD230"] * 5
-        text_colors = ["black"] * 16 
+        stat11 = [ round(x, 2) for x in stat1]        
+        stat22 = [ round(x, 2) for x in stat2]  
 
-        # instantiate PyPizza class
-        baker = PyPizza(
-            params=params,
-            min_range=min_range,        # min range values
-            max_range=max_range, 
-            background_color="#FAF7F3",
-            straight_line_color="#FAF7F3",  # color for straight lines
-            straight_line_lw=1,             # linewidth for straight lines
-            last_circle_lw=0,               # linewidth of last circle
-            other_circle_lw=1,              # linewidth for other circles
-            inner_circle_size=10,
-            other_circle_ls="-." 
-        )
+        radar = Radar(params, min_range, max_range,
+                  lower_is_better=lower_is_better,
+                  # whether to round any of the labels to integers instead of decimal places
+                  round_int=[False]*len(params),
+                  num_rings=4,  # the number of concentric circles (excluding center circle)
+                  # if the ring_width is more than the center_circle_radius then
+                  # the center circle radius will be wider than the width of the concentric circles
+                  ring_width=1, center_circle_radius=1)
+    # creating the figure using the grid function from mplsoccer:
+        fig, axs = grid(figheight=14, grid_height=0.915, title_height=0.06, endnote_height=0.025,
+                        title_space=0, endnote_space=0, grid_key='radar', axis=False)
 
-        colors = []
-        for x in params:
-            colors.append("#EFEEED")
-        # plot pizza
-        fig, ax = baker.make_pizza(
-            stat1,                          # list of values
-            figsize=(8, 8.5),                # adjust figsize according to your need
-            color_blank_space=slice_colors,        # use same color to fill blank space
-            slice_colors=slice_colors,       # color for individual slices
-            value_colors=text_colors,        # color for the value-text
-            value_bck_colors=slice_colors,   # color for the blank spaces
-            blank_alpha=0.4,                 # alpha for blank-space colors
-            kwargs_slices=dict(
-                edgecolor="#FAF7F3", zorder=2, linewidth=1
-            ),                               # values to be used when plotting slices
-            kwargs_params=dict(
-                font = "monospace",size =11,color="black",fontweight="bold", va="center"
-            ),                               # values to be used when adding parameter
-            kwargs_values=dict(
-                font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
-                bbox=dict(
-                edgecolor="#000000", facecolor="cornflowerblue",
-                boxstyle="round,pad=0.2", lw=1
-                )
-            )    
-        )
+        # plot radar
+        radar.setup_axis(ax=axs['radar'])  # format axis as a radar
+        rings_inner = radar.draw_circles(ax=axs['radar'], facecolor='#FAF7F3', edgecolor='#3FE2FF')
+        radar_output = radar.draw_radar_compare(stat11, stat22, ax=axs['radar'],
+                                                kwargs_radar={'facecolor': '#27D71E', 'alpha': 0.6},
+                                                kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
+        radar_poly, radar_poly2, vertices1, vertices2 = radar_output
+        range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
+                                               font="Futura")
+        param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
+                                               font="Futura")
+        axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
+                             c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
+        axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
+                             c='#FF0000', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
 
-
-        fig.set_facecolor('#FAF7F3')
-        ax.patch.set_facecolor('#FAF7F3')
-
-
-        # add title
+        # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
+        # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
+        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
+                                        font="Futura", ha='left', va='center')
+        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
+                                        font="Futura",
+                                        ha='left', va='center', color='#27D71E')
+        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#27D71E')
+        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+         # add subtitle
         fig.text(
-        0.515, 1.02, f"{Name}-{Team}",
-        path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-        ha="center", font = "monospace",size =32,color="black",fontweight="bold"
-        )
-
-        # add subtitle
-        fig.text(
-        0.515, 0.982,
-        f"Forward Player Stats/90 | {League} Attackers FW,FW/MF,MF/FW,FW/DF",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
-        )
-        fig.text(
-        0.515, 0.948,
-        f" 90s Played : {time} | Age : {age} | Season : 22-23",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
+        0.515, 1,
+        f"Forward Stats/90 \n {League} Attackers FW,FW/MF,MF/FW,FW/DF",
+        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
         )
 
 
@@ -412,44 +593,40 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "monospace",size =12,color="black",fontweight="bold",
+        font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
-        # add image
-        im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
-        ax_image = add_image(
-        im1, fig, left=0.4778, bottom=0.46, width=0.07, height=0.07
-        ) 
+        # add credits
+        CREDIT_1 = "Viz : Ligandro22"
 
-
-         # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
-        ax_image = add_image(
-        im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
-        )   # these values might differ when you are plotting
-
-
-        # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/RFCQnnrz/4.png')
-        ax_image = add_image(
-        im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
-        )   # these values might differ when you are plotting 
-
-
+        fig.text(
+        0.19, 0.005, f"{CREDIT_1}",
+        font = "Futura",size =20,color="black",fontweight="bold",
+        ha="right"
+        )
         st.pyplot(fig)
 
     def mid():
         kik =  prem[(prem["Pos"] == "MF") | (prem["Pos"] == "MF,DF") ]
+    
+        # select stats
+        playe1 = list(player1.iloc[0])
+        stat1 = []
+        stat1.extend([playe1[8],playe1[14],playe1[24],
+              playe1[31], playe1[27],playe1[28],
+              playe1[41],playe1[40],playe1[38],playe1[39],
+               playe1[19], playe1[20], playe1[15],playe1[42],playe1[18],playe1[13]])
 
         # select stats
-        playe = list(player.iloc[0])
+        playe2 = list(player2.iloc[0])
+        stat2 = []
+        stat2.extend([playe2[8],playe2[14],playe2[24],
+              playe2[31], playe2[27],playe2[28],
+              playe2[41],playe2[40],playe2[38],playe2[39],
+               playe2[19], playe2[20], playe2[15],playe2[42],playe2[18],playe2[13]])
 
-        stat = []
-        stat.extend([playe[8],playe[14],playe[24],
-              playe[31], playe[27],playe[28],
-              playe[41],playe[40],playe[38],playe[39],
-               playe[19], playe[20], playe[15],playe[42],playe[18],playe[13]])
+
         lis = [8,14,24,31,27,28,41,40,38,39,19,20,15,42,18,13]
         params = []
         for x in lis:
@@ -473,81 +650,68 @@ def show_radar():
 
 
 
-
+        lower_is_better = []
         # minimum range value and maximum range value for parameters
         min_range= []
         max_range =[]
         for x in lis:
             min_range.append(kik.iloc[:,x].min())
             max_range.append(kik.iloc[:,x].max())          
-        stat1 = [ round(x, 2) for x in stat]         
-        # color for the slices and text
-        slice_colors = ["#FF6161"] * 3 + ["#56AEFF"] * 3 + ["#94C450"] * 4 + ["#FFD230"] * 6
-        text_colors = ["black"] * 16 
+        stat11 = [ round(x, 2) for x in stat1]        
+        stat22 = [ round(x, 2) for x in stat2]  
 
-        # instantiate PyPizza class
-        baker = PyPizza(
-            params=params,
-            min_range=min_range,        # min range values
-            max_range=max_range, 
-            background_color="#FAF7F3",
-            straight_line_color="#FAF7F3",  # color for straight lines
-            straight_line_lw=1,             # linewidth for straight lines
-            last_circle_lw=0,               # linewidth of last circle
-            other_circle_lw=1,              # linewidth for other circles
-            inner_circle_size=10,
-            other_circle_ls="-." 
-        )
+        radar = Radar(params, min_range, max_range,
+                  lower_is_better=lower_is_better,
+                  # whether to round any of the labels to integers instead of decimal places
+                  round_int=[False]*len(params),
+                  num_rings=4,  # the number of concentric circles (excluding center circle)
+                  # if the ring_width is more than the center_circle_radius then
+                  # the center circle radius will be wider than the width of the concentric circles
+                  ring_width=1, center_circle_radius=1)
+    # creating the figure using the grid function from mplsoccer:
+        fig, axs = grid(figheight=14, grid_height=0.915, title_height=0.06, endnote_height=0.025,
+                        title_space=0, endnote_space=0, grid_key='radar', axis=False)
 
-        colors = []
-        for x in params:
-            colors.append("#EFEEED")
-        # plot pizza
-        fig, ax = baker.make_pizza(
-            stat1,                          # list of values
-            figsize=(8, 8.5),                # adjust figsize according to your need
-            color_blank_space=slice_colors,        # use same color to fill blank space
-            slice_colors=slice_colors,       # color for individual slices
-            value_colors=text_colors,        # color for the value-text
-            value_bck_colors=slice_colors,   # color for the blank spaces
-            blank_alpha=0.4,                 # alpha for blank-space colors
-            kwargs_slices=dict(
-                edgecolor="#FAF7F3", zorder=2, linewidth=1
-            ),                               # values to be used when plotting slices
-            kwargs_params=dict(
-                font = "monospace",size =11,color="black",fontweight="bold", va="center"
-            ),                               # values to be used when adding parameter
-            kwargs_values=dict(
-                font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
-                bbox=dict(
-                edgecolor="#000000", facecolor="cornflowerblue",
-                boxstyle="round,pad=0.2", lw=1
-                )
-            )    
-        )
+        # plot radar
+        radar.setup_axis(ax=axs['radar'])  # format axis as a radar
+        rings_inner = radar.draw_circles(ax=axs['radar'], facecolor='#FAF7F3', edgecolor='#3FE2FF')
+        radar_output = radar.draw_radar_compare(stat11, stat22, ax=axs['radar'],
+                                                kwargs_radar={'facecolor': '#27D71E', 'alpha': 0.6},
+                                                kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
+        radar_poly, radar_poly2, vertices1, vertices2 = radar_output
+        range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
+                                               font="Futura")
+        param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
+                                               font="Futura")
+        axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
+                             c='#27D71E', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
+        axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
+                             c='#FF0000', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
 
-
-        fig.set_facecolor('#FAF7F3')
-        ax.patch.set_facecolor('#FAF7F3')
-
-
-        # add title
+        # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
+        # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
+        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
+                                        font="Futura", ha='left', va='center')
+        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
+                                        font="Futura",
+                                        ha='left', va='center', color='#27D71E')
+        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#27D71E')
+        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+         # add subtitle
         fig.text(
-        0.515, 1.02, f"{Name}-{Team}",
-        path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-        ha="center", font = "monospace",size =32,color="black",fontweight="bold"
-        )
-
-        # add subtitle
-        fig.text(
-        0.515, 0.982,
-        f"Midfielder Stats/90 | {League} Midfielders MF,MF/DF",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
-        )
-        fig.text(
-        0.515, 0.948,
-        f" 90s Played : {time} | Age : {age} | Season : 22-23",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
+        0.515, 1,
+        f"Midfielder Stats/90 \n {League} Midfielders MF,MF/DF",
+        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
         )
 
 
@@ -559,45 +723,40 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "Monospace",size =12,color="black",fontweight="bold",
+        font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
-        # add image
-        # add image
-        im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
-        ax_image = add_image(
-        im1, fig, left=0.4778, bottom=0.46, width=0.07, height=0.07
+         # add credits
+        CREDIT_1 = "Viz : Ligandro22"
+
+        fig.text(
+        0.19, 0.005, f"{CREDIT_1}",
+        font = "Futura",size =20,color="black",fontweight="bold",
+        ha="right"
         )
-
-         # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
-        ax_image = add_image(
-        im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
-        )   # these values might differ when you are plotting
-
-
-        # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/Y9XNNqkL/5.png')
-        ax_image = add_image(
-        im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
-        )   # these values might differ when you are plotting 
-
-
+    
         st.pyplot(fig)
 
     def defender():
-        kik = prem[(prem["Pos"] == "DF") | (prem["Pos"] == "DF,MF") | (prem["Pos"] == "DF,FW")]
+        kik =  prem[(prem["Pos"] == "MF") | (prem["Pos"] == "MF,DF") ]
 
         # select stats
-        playe = list(player.iloc[0])
+        playe1 = list(player1.iloc[0])
+        stat1 = []
+        stat1.extend([playe1[8],playe1[24],
+              playe1[31], playe1[27],playe1[28],
+              playe1[41],playe1[34],playe1[36],playe1[40],playe1[39],
+              playe1[15],playe1[22],playe1[18],playe1[30],playe1[17],playe1[13]])
+
+        playe2 = list(player2.iloc[0])
+        stat2 = []
+        stat2.extend([playe2[8],playe2[24],
+              playe2[31], playe2[27],playe2[28],
+              playe2[41],playe2[34],playe2[36],playe2[40],playe2[39],
+              playe2[15],playe2[22],playe2[18],playe2[30],playe2[17],playe2[13]])
 
 
-        stat = []
-        stat.extend([playe[8],playe[24],
-              playe[31], playe[27],playe[28],
-              playe[41],playe[34],playe[36],playe[40],playe[39],
-              playe[15],playe[22],playe[18],playe[30],playe[17],playe[13]])
         lis = [8,24,31,27,28,41,34,36,40,39,15,22,18,30,17,13]
         params = []
         for x in lis:
@@ -621,80 +780,68 @@ def show_radar():
 
 
 
+        lower_is_better = []
         # minimum range value and maximum range value for parameters
         min_range= []
         max_range =[]
         for x in lis:
             min_range.append(kik.iloc[:,x].min())
             max_range.append(kik.iloc[:,x].max())          
-        stat1 = [ round(x, 2) for x in stat]         
-        # color for the slices and text
-        slice_colors = ["#FF6161"] * 2 + ["#56AEFF"] * 3 + ["#94C450"] * 5 + ["#FFD230"] * 6
-        text_colors = ["black"] * 16 
+        stat11 = [ round(x, 2) for x in stat1]        
+        stat22 = [ round(x, 2) for x in stat2]  
 
-        # instantiate PyPizza class
-        baker = PyPizza(
-            params=params,
-            min_range=min_range,        # min range values
-            max_range=max_range, 
-            background_color="#FAF7F3",
-            straight_line_color="#FAF7F3",  # color for straight lines
-            straight_line_lw=1,             # linewidth for straight lines
-            last_circle_lw=0,               # linewidth of last circle
-            other_circle_lw=1,              # linewidth for other circles
-            inner_circle_size=10,
-            other_circle_ls="-." 
-        )
+        radar = Radar(params, min_range, max_range,
+                  lower_is_better=lower_is_better,
+                  # whether to round any of the labels to integers instead of decimal places
+                  round_int=[False]*len(params),
+                  num_rings=4,  # the number of concentric circles (excluding center circle)
+                  # if the ring_width is more than the center_circle_radius then
+                  # the center circle radius will be wider than the width of the concentric circles
+                  ring_width=1, center_circle_radius=1)
+    # creating the figure using the grid function from mplsoccer:
+        fig, axs = grid(figheight=14, grid_height=0.915, title_height=0.06, endnote_height=0.025,
+                        title_space=0, endnote_space=0, grid_key='radar', axis=False)
 
-        colors = []
-        for x in params:
-            colors.append("#EFEEED")
-        # plot pizza
-        fig, ax = baker.make_pizza(
-            stat1,                          # list of values
-            figsize=(8, 8.5),                # adjust figsize according to your need
-            color_blank_space=slice_colors,        # use same color to fill blank space
-            slice_colors=slice_colors,       # color for individual slices
-            value_colors=text_colors,        # color for the value-text
-            value_bck_colors=slice_colors,   # color for the blank spaces
-            blank_alpha=0.4,                 # alpha for blank-space colors
-            kwargs_slices=dict(
-                edgecolor="#FAF7F3", zorder=2, linewidth=1
-            ),                               # values to be used when plotting slices
-            kwargs_params=dict(
-                font = "monospace",size =11,color="black",fontweight="bold", va="center"
-            ),                               # values to be used when adding parameter
-            kwargs_values=dict(
-                font = "monospace",size =9,color="black",fontweight="bold", zorder=3,
-                bbox=dict(
-                edgecolor="#000000", facecolor="cornflowerblue",
-                boxstyle="round,pad=0.2", lw=1
-                )
-            )    
-        )
+        # plot radar
+        radar.setup_axis(ax=axs['radar'])  # format axis as a radar
+        rings_inner = radar.draw_circles(ax=axs['radar'], facecolor='#FAF7F3', edgecolor='#3FE2FF')
+        radar_output = radar.draw_radar_compare(stat11, stat22, ax=axs['radar'],
+                                                kwargs_radar={'facecolor': '#27D71E', 'alpha': 0.6},
+                                                kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
+        radar_poly, radar_poly2, vertices1, vertices2 = radar_output
+        range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
+                                               font="Futura")
+        param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
+                                               font="Futura")
+        axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
+                             c='#27D71E', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
+        axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
+                             c='#FF0000', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
 
-
-        fig.set_facecolor('#FAF7F3')
-        ax.patch.set_facecolor('#FAF7F3')
-
-
-        # add title
+        # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
+        # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
+        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
+                                        font="Futura", ha='left', va='center')
+        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
+                                        font="Futura",
+                                        ha='left', va='center', color='#27D71E')
+        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+        title5_text = axs['title'].text(0.085, -0.1, "90s:"+str(time1), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#27D71E')
+        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
+                                        font="Futura",
+                                        ha='right', va='center', color='#FF3030')
+         # add subtitle
         fig.text(
-        0.515, 1.02, f"{Name}-{Team}",
-        path_effects=[path_effects.Stroke(linewidth=0.2, foreground="black"), path_effects.Normal()],
-        ha="center", font = "monospace",size =32,color="black",fontweight="bold"
-        )
-
-        # add subtitle
-        fig.text(
-        0.515, 0.982,
-        f"Defender Stats/90 | {League} Defenders DF,DF/FW,DF/MF",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
-        )
-        fig.text(
-        0.515, 0.948,
-        f" 90s Played : {time} | Age : {age} | Season : 22-23",
-        ha="center", font = "monospace",size =13,color="black",fontweight="bold"
+        0.515, 1,
+        f"Defender Stats/90 \n {League} Defenders DF,DF/FW,DF/MF",
+        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
         )
 
 
@@ -706,29 +853,18 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "monospace",size =12,color="black",fontweight="bold",
+        font = "Futura",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
-        # add image
-        im1 = plt.imread('https://i.postimg.cc/Kzj8dZS2/LOGO1.png')
-        ax_image = add_image(
-        im1, fig, left=0.4778, bottom=0.46, width=0.07, height=0.07
-        ) 
+         # add credits
+        CREDIT_1 = "Viz : Ligandro22"
 
-
-         # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/br7tLZ5r/3.png')
-        ax_image = add_image(
-        im3, fig, left=0.08, bottom=-0.015, width=0.17, height=0.17
-        )   # these values might differ when you are plotting
-
-
-        # these values might differ when you are plotting
-        im3 = plt.imread('https://i.postimg.cc/nrzX68LJ/6.png')
-        ax_image = add_image(
-        im3, fig, left=0.85, bottom=0.815, width=0.12, height=0.12
-        )   # these values might differ when you are plotting 
+        fig.text(
+        0.19, 0.005, f"{CREDIT_1}",
+        font = "Futura",size =20,color="black",fontweight="bold",
+        ha="right"
+        )
 
         st.pyplot(fig)
 
