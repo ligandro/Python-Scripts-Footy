@@ -2,7 +2,7 @@ import streamlit as st
 from pizza import show_pizza
 from radar import show_radar
 
-page = st.sidebar.selectbox("Pizza Plots or Comparision Radars", ("Pizza", "Radar"))
+page = st.selectbox("Pizza Plots or Comparision Radars", ("Pizza", "Radar"))
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
