@@ -550,9 +550,9 @@ def show_radar():
                                                 kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
         radar_poly, radar_poly2, vertices1, vertices2 = radar_output
         range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
-                                               font="Futura")
+                                               font="monospace")
         param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
-                                               font="Futura")
+                                               font="monospace")
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
                              c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
@@ -561,27 +561,27 @@ def show_radar():
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
         title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
-                                        font="Futura", ha='left', va='center')
+                                        font="monospace", ha='left', va='center')
         title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='left', va='center', color='#27D71E')
         title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
          # add subtitle
         fig.text(
         0.515, 1,
         f"Forward Stats/90 \n {League} Attackers FW,FW/MF,MF/FW,FW/DF",
-        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
+        ha="center", font = "monospace",size =25,color="black",fontweight="bold"
         )
 
 
@@ -593,7 +593,7 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
@@ -602,7 +602,7 @@ def show_radar():
 
         fig.text(
         0.205, 0.005, f"{CREDIT_1}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
         st.pyplot(fig)
@@ -680,9 +680,9 @@ def show_radar():
                                                 kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
         radar_poly, radar_poly2, vertices1, vertices2 = radar_output
         range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
-                                               font="Futura")
+                                               font="monospace")
         param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
-                                               font="Futura")
+                                               font="monospace")
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
                              c='#27D71E', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
@@ -691,27 +691,27 @@ def show_radar():
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
         title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
-                                        font="Futura", ha='left', va='center')
+                                        font="monospace", ha='left', va='center')
         title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='left', va='center', color='#27D71E')
         title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
          # add subtitle
         fig.text(
         0.515, 1,
         f"Midfielder Stats/90 \n {League} Midfielders MF,MF/DF",
-        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
+        ha="center", font = "monospace",size =25,color="black",fontweight="bold"
         )
 
 
@@ -723,7 +723,7 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
@@ -732,7 +732,7 @@ def show_radar():
 
         fig.text(
         0.205, 0.005, f"{CREDIT_1}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
     
@@ -810,9 +810,9 @@ def show_radar():
                                                 kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
         radar_poly, radar_poly2, vertices1, vertices2 = radar_output
         range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
-                                               font="Futura")
+                                               font="monospace")
         param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
-                                               font="Futura")
+                                               font="monospace")
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
                              c='#27D71E', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
@@ -821,27 +821,27 @@ def show_radar():
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
         title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
-                                        font="Futura", ha='left', va='center')
+                                        font="monospace", ha='left', va='center')
         title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='left', va='center', color='#27D71E')
         title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
         title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#27D71E')
         title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
-                                        font="Futura",
+                                        font="monospace",
                                         ha='right', va='center', color='#FF3030')
          # add subtitle
         fig.text(
         0.515, 1,
         f"Defender Stats/90 \n {League} Defenders DF,DF/FW,DF/MF",
-        ha="center", font = "Futura",size =25,color="black",fontweight="bold"
+        ha="center", font = "monospace",size =25,color="black",fontweight="bold"
         )
 
 
@@ -853,7 +853,7 @@ def show_radar():
 
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
@@ -862,7 +862,7 @@ def show_radar():
 
         fig.text(
         0.205, 0.005, f"{CREDIT_1}",
-        font = "Futura",size =20,color="black",fontweight="bold",
+        font = "monospace",size =20,color="black",fontweight="bold",
         ha="right"
         )
 
