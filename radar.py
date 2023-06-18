@@ -564,24 +564,24 @@ def show_radar():
         
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
-        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#3FE2FF',fontweight="bold",
-                                        font="monospace", ha='left', va='center')
-        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,fontweight="bold",
+        title1_text = axs['title'].text(0.01, 0.3, Name1, fontsize=25, color='#3FE2FF',fontweight="bold",
+                                    font="monospace", ha='left', va='center')
+        title2_text = axs['title'].text(0.01, -0.05, Team1, fontsize=20,fontweight="bold",
                                         font="monospace",
                                         ha='left', va='center', color='#3FE2FF')
-        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,fontweight="bold",
+        title3_text = axs['title'].text(0.99, 0.3, Name2, fontsize=25,fontweight="bold",
                                         font="monospace",
                                         ha='right', va='center', color='#F600BE')
-        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,fontweight="bold",
+        title4_text = axs['title'].text(0.99, -0.05, Team2, fontsize=20,fontweight="bold",
                                         font="monospace",
                                         ha='right', va='center', color='#F600BE')
-        title5_text = axs['title'].text(0.099, -0.1, "90s:"+str(time1), fontsize=17,fontweight="bold",
+        title5_text = axs['title'].text(0.099, -0.4, "90s:"+str(time1), fontsize=17,fontweight="bold",
                                         font="monospace",
                                         ha='right', va='center', color='#3FE2FF')
-        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,fontweight="bold",
+        title6_text = axs['title'].text(0.99, -0.4, "90s:"+str(time2), fontsize=17,fontweight="bold",
                                         font="monospace",
                                         ha='right', va='center', color='#F600BE')
-        
+
          # add subtitle
         fig.text(
         0.515, 1,
