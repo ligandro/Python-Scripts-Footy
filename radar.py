@@ -543,68 +543,74 @@ def show_radar():
                         title_space=0, endnote_space=0, grid_key='radar', axis=False)
 
         # plot radar
-        radar.setup_axis(ax=axs['radar'])  # format axis as a radar
-        rings_inner = radar.draw_circles(ax=axs['radar'], facecolor='#FAF7F3', edgecolor='#3FE2FF')
+        fig.set_facecolor('#15242e')
+        # plot radar
+        radar.setup_axis(ax=axs['radar'], facecolor='None')  # format axis as a radar
+        rings_inner = radar.draw_circles(ax=axs['radar'], facecolor='#15242e', edgecolor='white')
         radar_output = radar.draw_radar_compare(stat11, stat22, ax=axs['radar'],
-                                                kwargs_radar={'facecolor': '#27D71E', 'alpha': 0.6},
-                                                kwargs_compare={'facecolor': '#FF3030', 'alpha': 0.6})
+                                                kwargs_radar={'facecolor': '#3FE2FF', 'alpha': 0.6,
+                                                              'edgecolor': '#3FE2FF','linewidth': 4},
+                                                kwargs_compare={'facecolor': '#F600BE', 'alpha': 0.6
+                                                               ,'edgecolor': '#F600BE','linewidth': 4})
         radar_poly, radar_poly2, vertices1, vertices2 = radar_output
-        range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=20,
-                                               font="monospace")
-        param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=25,
-                                               font="monospace")
+        #range_labels = radar.draw_range_labels(ax=axs['radar'], fontsize=17,font="monospace",color='#fcfcfc')
+        param_labels = radar.draw_param_labels(ax=axs['radar'], fontsize=17,
+                                               font="monospace",color='#fcfcfc',fontweight="bold")
+        
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
-                             c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
+                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=32, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
-                             c='#FF0000', edgecolors='#6d6c6d', marker='o', s=150, zorder=2)
-
+                             c='#FF95E7', edgecolors='#6d6c6d', marker='o', s=32, zorder=2)
+        
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
-        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#27D71E',
+        title1_text = axs['title'].text(0.01, 0.6, Name1, fontsize=25, color='#3FE2FF',fontweight="bold",
                                         font="monospace", ha='left', va='center')
-        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,
+        title2_text = axs['title'].text(0.01, 0.25, Team1, fontsize=20,fontweight="bold",
                                         font="monospace",
-                                        ha='left', va='center', color='#27D71E')
-        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,
+                                        ha='left', va='center', color='#3FE2FF')
+        title3_text = axs['title'].text(0.99, 0.6, Name2, fontsize=25,fontweight="bold",
                                         font="monospace",
-                                        ha='right', va='center', color='#FF3030')
-        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,
+                                        ha='right', va='center', color='#F600BE')
+        title4_text = axs['title'].text(0.99, 0.25, Team2, fontsize=20,fontweight="bold",
                                         font="monospace",
-                                        ha='right', va='center', color='#FF3030')
-        title5_text = axs['title'].text(0.09, -0.1, "90s:"+str(time1), fontsize=17,
+                                        ha='right', va='center', color='#F600BE')
+        title5_text = axs['title'].text(0.099, -0.1, "90s:"+str(time1), fontsize=17,fontweight="bold",
                                         font="monospace",
-                                        ha='right', va='center', color='#27D71E')
-        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,
+                                        ha='right', va='center', color='#3FE2FF')
+        title6_text = axs['title'].text(0.99, -0.1, "90s:"+str(time2), fontsize=17,fontweight="bold",
                                         font="monospace",
-                                        ha='right', va='center', color='#FF3030')
+                                        ha='right', va='center', color='#F600BE')
+        
          # add subtitle
         fig.text(
         0.515, 1,
         f"Forward Stats/90 \n {League} Attackers FW,FW/MF,MF/FW,FW/DF",
-        ha="center", font = "monospace",size =25,color="black",fontweight="bold"
+        ha="center", font = "monospace",size =22,color="white",fontweight="bold"
         )
-
-
-
+        
+        
+        
         # add credits
         notes = f'Only Players with 90s >= {minutes}'
         CREDIT_1 = "Data : Fbref"
         CREDIT_2 = "MPL Soccer"
-
+        
         fig.text(
         0.99, 0.005, f"{notes}\n{CREDIT_1}\n{CREDIT_2}",
-        font = "monospace",size =20,color="black",fontweight="bold",
+        font = "monospace",size =17,color="white",fontweight="bold",
         ha="right"
         )
-
+        
         # add credits
         CREDIT_1 = "Viz : Ligandro22"
-
+        
         fig.text(
-        0.205, 0.005, f"{CREDIT_1}",
-        font = "monospace",size =20,color="black",fontweight="bold",
+        0.19, 0.005, f"{CREDIT_1}",
+        font = "monospace",size =17,color="white",fontweight="bold",
         ha="right"
         )
+
         st.pyplot(fig)
 
     def mid():
