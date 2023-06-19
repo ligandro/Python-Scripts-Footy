@@ -558,9 +558,9 @@ def show_radar():
                                                font="monospace",color='#fcfcfc',fontweight="bold")
         
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
-                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
-                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
@@ -695,9 +695,9 @@ def show_radar():
                                                font="monospace",color='#fcfcfc',fontweight="bold")
         
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
-                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
-                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
@@ -830,9 +830,9 @@ def show_radar():
                                                font="monospace",color='#fcfcfc',fontweight="bold")
         
         axs['radar'].scatter(vertices1[:, 0], vertices1[:, 1],
-                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                                 c='#00f2c1', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         axs['radar'].scatter(vertices2[:, 0], vertices2[:, 1],
-                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=44, zorder=2)
+                             c='#FF00CE', edgecolors='#6d6c6d', marker='o', s=55, zorder=2)
         
         # adding the endnote and title text (these axes range from 0-1, i.e. 0, 0 is the bottom left)
         # Note we are slightly offsetting the text from the edges by 0.01 (1%, e.g. 0.99)
