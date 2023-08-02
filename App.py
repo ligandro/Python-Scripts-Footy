@@ -1,7 +1,7 @@
 import streamlit as st
 from pizza import show_pizza
 from radar import show_radar
-from report import show_report
+#from report import show_report
 
 status1 = [  "Pizza Plots" ,"Comparision Radars","Player Match Report"]
            
