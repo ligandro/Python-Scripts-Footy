@@ -3,5 +3,5 @@ mplsoccer==1.1.7
 bs4==0.0.1
 lxml==4.9.2
 html5lib==1.1
-selenium
+selenium==4.4.3
 webdriver-manager
