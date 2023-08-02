@@ -1,4 +1,5 @@
 selenium==4.4.3
+seleniumbase
 matplotlib==3.5.1
 mplsoccer==1.1.7
 bs4==0.0.1
